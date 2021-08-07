@@ -1,32 +1,39 @@
 <template>
-  <b-row>
-    <b-col sm="auto">
-      <b-button @click="btnClickHandler()">Click</b-button>
-    </b-col>
-    <b-col>
-      <ul class="home__list">
-        <li
-          class="home__item"
-          v-for="(value, index) in getNewsList"
-          :key="value.source.id + index"
+  <b-row class="mr-0 ml-0">
+    <FormFetch />
+    <b-row class="mr-0 ml-0">
+      <b-list-group>
+        <b-list-group-item
+          v-for="article in getNewsList.articles"
+          :key="article.source.id + article.source.name + Date.now()"
         >
-          <p>{{ value.author }}</p>
-          <p>{{ value.title }}</p>
-          <p>{{ value.description }}</p>
-          <p>{{ value.url }}</p>
-        </li>
-      </ul>
-    </b-col>
+          <b-card :title="article.title" :sub-title="article.author">
+            <b-row>
+              <b-col
+                ><b-card-text>{{ article.description }}</b-card-text></b-col
+              >
+              <b-col
+                ><b-card-img-lazy :src="article.urlToImage"></b-card-img-lazy
+              ></b-col>
+            </b-row>
+            <a :href="article.url" class="card-link">to source...</a>
+          </b-card>
+        </b-list-group-item>
+      </b-list-group>
+    </b-row>
   </b-row>
 </template>
 
 <script>
-import newsApi from "@/config/newsApi.config.js";
+import FormFetch from "@/components/FormFetch.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Home",
 
-  components: {},
+  components: {
+    FormFetch,
+  },
 
   data() {
     return {
@@ -34,18 +41,10 @@ export default {
     };
   },
 
-  methods: {
-    async btnClickHandler() {
-      const res = await fetch(newsApi);
-      const data = await res.json();
-      this.newsList = data;
-    },
-  },
+  methods: {},
 
   computed: {
-    getNewsList() {
-      return this.newsList.articles;
-    },
+    ...mapGetters(["getNewsList"]),
   },
 };
 </script>
