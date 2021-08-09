@@ -11,25 +11,32 @@
             <template #button-content>
               <em>{{ getUserProfile.displayName }}</em>
             </template>
-            <b-dropdown-item to="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item to="/profile"
+              ><b-icon icon="person-fill" class="mr-2"></b-icon
+              >Profile</b-dropdown-item
+            >
             <b-dropdown-item @click="signOutClickHandler()"
-              >Sign Out</b-dropdown-item
+              ><b-icon icon="power" class="mr-2"></b-icon> Sign
+              Out</b-dropdown-item
             >
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
     <router-view />
+    <Toasts :text="'You are logged out'" />
   </BContainer>
 </template>
 
 <script>
+import Toasts from "@/components/Toasts.vue";
 import { BContainer } from "bootstrap-vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     BContainer,
+    Toasts,
   },
 
   computed: {
@@ -39,6 +46,7 @@ export default {
   methods: {
     ...mapActions(["exit"]),
     signOutClickHandler() {
+      this.$bvToast.show("my-toast");
       this.exit();
       this.$router.push("/login");
     },

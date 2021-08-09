@@ -64,7 +64,7 @@
           ></b-form-select>
         </b-form-group>
       </b-row>
-      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="submit" variant="primary">Find news</b-button>
     </b-form>
   </b-row>
 </template>

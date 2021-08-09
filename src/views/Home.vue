@@ -1,7 +1,9 @@
 <template>
   <Spiner v-if="getLoading" />
   <b-row v-else class="mr-0 ml-0">
-    <FormFetch />
+    <transition>
+      <FormFetch />
+    </transition>
     <b-row class="mr-0 ml-0">
       <b-list-group>
         <b-list-group-item

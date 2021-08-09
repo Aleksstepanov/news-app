@@ -26,7 +26,6 @@ const actions = {
 const mutations = {
   setNewsList(state, val) {
     state.newsList = val;
-    console.log(val);
   },
 };
 const getters = {
