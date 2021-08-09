@@ -1,5 +1,6 @@
 <template>
-  <b-form @submit.prevent="loginClickHandler()" :style="'width: 400px'">
+  <Spiner v-if="getLoading" />
+  <b-form v-else @submit.prevent="loginClickHandler()" :style="'width: 400px'">
     <b-form-group
       id="email-group"
       label="Email Adress:"
@@ -38,9 +39,15 @@
 </template>
 
 <script>
+import Spiner from "@/components/Spiner.vue";
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "Login",
+
+  components: {
+    Spiner,
+  },
 
   data() {
     return {
@@ -48,7 +55,6 @@ export default {
         email: "",
         password: "",
       },
-      user: null,
     };
   },
 
@@ -57,14 +63,13 @@ export default {
     async loginClickHandler() {
       await this.login(this.form);
       if (this.getUserProfile) {
-        this.user = this.getUserProfile;
         this.$router.push("/");
       }
     },
   },
 
   computed: {
-    ...mapGetters(["getUserProfile"]),
+    ...mapGetters(["getUserProfile", "getLoading"]),
   },
 };
 </script>
