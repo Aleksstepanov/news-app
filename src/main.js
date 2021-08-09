@@ -15,21 +15,17 @@ Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.config.productionTip = false;
 
-let app;
-
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    if (!app) {
-      app = new Vue({
-        router,
-        store,
-        created() {
-          this.$store.dispatch("fetchUser", user);
-        },
-        render: (h) => h(App),
-      }).$mount("#app");
-    } else {
-      this.$router.push("/login");
-    }
-  }
-});
+new Vue({
+  router,
+  store,
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.dispatch("fetchUser", firebase.auth().currentUser);
+      } else {
+        this.$store.dispatch("fetchUser", null);
+      }
+    });
+  },
+  render: (h) => h(App),
+}).$mount("#app");
