@@ -101,10 +101,11 @@ export default {
     ...mapActions(["register"]),
 
     async RegisterClickHandler() {
-      await this.register(this.form);
-      if (this.getUserProfile) {
-        this.$router.push("/");
-      }
+      await this.register(this.form).then(() => {
+        if (this.getUserProfile) {
+          this.$router.push("/");
+        }
+      });
     },
   },
 };

@@ -20,7 +20,7 @@ export default new Vuex.Store({
       state.loadnig = val;
     },
     setInformation(state, val) {
-      state.information = val;
+      state.information = Object.assign({}, state.information, val);
     },
   },
   actions: {},

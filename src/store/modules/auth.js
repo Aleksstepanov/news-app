@@ -20,6 +20,7 @@ const actions = {
     } catch (err) {
       commit("setError", err);
       commit("setUserProfile", null);
+      commit("setLoading", false);
       throw new Error(err);
     }
   },
@@ -37,7 +38,7 @@ const actions = {
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then((data) => {
         data.user.updateProfile({
-          displayName: payload.firstName + payload.lastName,
+          displayName: payload.firstName + " " + payload.lastName,
         });
       })
       .then(() => {
@@ -50,6 +51,7 @@ const actions = {
           uid: user.uid,
           displayName: user.displayName,
         });
+        return user;
       })
       .then((user) => {
         dispatch("fetchUser", user);
@@ -67,6 +69,7 @@ const actions = {
           code: "error",
           message: "error in register",
         });
+        commit("setLoading", false);
         throw new Error(err);
       });
   },

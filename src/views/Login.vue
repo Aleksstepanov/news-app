@@ -61,10 +61,11 @@ export default {
   methods: {
     ...mapActions(["login"]),
     async loginClickHandler() {
-      await this.login(this.form);
-      if (this.getUserProfile) {
-        this.$router.push("/");
-      }
+      await this.login(this.form).then(() => {
+        if (this.getUserProfile) {
+          this.$router.push("/");
+        }
+      });
     },
   },
 
