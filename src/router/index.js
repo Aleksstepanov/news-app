@@ -9,6 +9,14 @@ const routes = [
     name: "Home",
     component: () => import("../views/Home"),
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+    meta: {
+      layout: "auth",
+    },
+  },
 ];
 
 const router = new VueRouter({
