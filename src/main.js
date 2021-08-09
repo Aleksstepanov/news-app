@@ -17,12 +17,19 @@ Vue.config.productionTip = false;
 
 let app;
 
-firebase.auth().onAuthStateChanged(() => {
-  if (!app) {
-    app = new Vue({
-      router,
-      store,
-      render: (h) => h(App),
-    }).$mount("#app");
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    if (!app) {
+      app = new Vue({
+        router,
+        store,
+        created() {
+          this.$store.dispatch("fetchUser", user);
+        },
+        render: (h) => h(App),
+      }).$mount("#app");
+    } else {
+      this.$router.push("/login");
+    }
   }
 });

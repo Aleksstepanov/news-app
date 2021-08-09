@@ -1,5 +1,6 @@
 <template>
-  <b-row class="mr-0 ml-0">
+  <Spiner v-if="getLoading" />
+  <b-row v-else class="mr-0 ml-0">
     <FormFetch />
     <b-row class="mr-0 ml-0">
       <b-list-group>
@@ -26,6 +27,7 @@
 
 <script>
 import FormFetch from "@/components/FormFetch.vue";
+import Spiner from "@/components/Spiner.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -33,18 +35,13 @@ export default {
 
   components: {
     FormFetch,
-  },
-
-  data() {
-    return {
-      newsList: {},
-    };
+    Spiner,
   },
 
   methods: {},
 
   computed: {
-    ...mapGetters(["getNewsList"]),
+    ...mapGetters(["getNewsList", "getLoading"]),
   },
 };
 </script>
