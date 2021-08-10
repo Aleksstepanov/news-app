@@ -1,7 +1,8 @@
 import newsApi from "@/config/newsApi.config.js";
 
 const state = {
-  newsList: "",
+  newsList: [],
+  newsListFavorites: [],
 };
 const actions = {
   async fetchNewsList({ commit }, payload) {
@@ -38,12 +39,14 @@ const mutations = {
     state.newsList.map((art) => Object.assign(art, { favorite: val }));
   },
   setArticlesFavorite(state, val) {
-    state.newsList[val].favorite = true;
+    state.newsListFavorites.push(state.newsList[val]);
+    state.newsList.splice(val, 1);
+    state.newsListFavorites[state.newsListFavorites.length - 1].favorite = true;
   },
 };
 const getters = {
-  getNewsList: (state) => state.newsList,
-  getFavoriteList: (state) => state.newsList.map((art) => art.favorite),
+  getNewsList: (state) =>
+    state.newsList.concat(state.newsListFavorites).reverse(),
 };
 
 export default { state, actions, mutations, getters };

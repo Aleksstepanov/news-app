@@ -63,10 +63,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getNewsList", "getLoading", "getFavoriteList"]),
-    favoriteList() {
-      return this.getFavoriteList.map((art) => art.favorite);
-    },
+    ...mapGetters(["getNewsList", "getLoading"]),
   },
 };
 </script>
