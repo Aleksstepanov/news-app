@@ -7,10 +7,24 @@
     <b-row class="mr-0 ml-0">
       <b-list-group>
         <b-list-group-item
-          v-for="article in getNewsList.articles"
+          v-for="(article, index) in getNewsList"
           :key="article.source.id + article.source.name + Date.now()"
         >
           <b-card :title="article.title" :sub-title="article.author">
+            <b-row class="d-flex justify-content-end icon-star"
+              ><b-icon
+                v-if="!getNewsList[index].favorite"
+                @click="favoriteClick(index)"
+                icon="star"
+                class="h1"
+              ></b-icon>
+              <b-icon
+                v-else
+                icon="star-fill"
+                variant="warning"
+                class="h1"
+              ></b-icon
+            ></b-row>
             <b-row>
               <b-col
                 ><b-card-text>{{ article.description }}</b-card-text></b-col
@@ -30,7 +44,7 @@
 <script>
 import FormFetch from "@/components/FormFetch.vue";
 import Spiner from "@/components/Spiner.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Home",
@@ -40,10 +54,25 @@ export default {
     Spiner,
   },
 
-  methods: {},
+  methods: {
+    ...mapActions(["addFavorite"]),
+    favoriteClick(index) {
+      this.addFavorite(index);
+      console.log(this.getNewsList);
+    },
+  },
 
   computed: {
-    ...mapGetters(["getNewsList", "getLoading"]),
+    ...mapGetters(["getNewsList", "getLoading", "getFavoriteList"]),
+    favoriteList() {
+      return this.getFavoriteList.map((art) => art.favorite);
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-star {
+  cursor: pointer;
+}
+</style>

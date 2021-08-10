@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import news from "./modules/news";
 import auth from "./modules/auth";
+import mynewsList from "./modules/myNewsList";
 
 Vue.use(Vuex);
 
@@ -32,5 +33,6 @@ export default new Vuex.Store({
   modules: {
     news,
     auth,
+    mynewsList,
   },
 });

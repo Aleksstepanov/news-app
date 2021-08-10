@@ -1,6 +1,7 @@
 <template>
   <Spiner v-if="getLoading" />
   <b-form v-else @submit.prevent="loginClickHandler()" :style="'width: 400px'">
+    <h1>Authorization</h1>
     <b-form-group
       id="email-group"
       label="Email Adress:"

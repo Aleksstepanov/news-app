@@ -5,6 +5,7 @@
     @submit.prevent="RegisterClickHandler()"
     :style="'width: 400px'"
   >
+    <h1>Registration</h1>
     <b-form-group
       id="firstName-group"
       label="First Name:"

@@ -40,6 +40,14 @@ const routes = [
       auth: true,
     },
   },
+  {
+    path: "/mynewslist",
+    name: "My News List",
+    component: () => import("../views/MyNewsList.vue"),
+    meta: {
+      auth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({

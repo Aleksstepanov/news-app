@@ -15,6 +15,10 @@
               ><b-icon icon="person-fill" class="mr-2"></b-icon
               >Profile</b-dropdown-item
             >
+            <b-dropdown-item to="/mynewslist"
+              ><b-icon icon="book" class="mr-2"></b-icon> My news
+              list</b-dropdown-item
+            >
             <b-dropdown-item @click="signOutClickHandler()"
               ><b-icon icon="power" class="mr-2"></b-icon> Sign
               Out</b-dropdown-item
