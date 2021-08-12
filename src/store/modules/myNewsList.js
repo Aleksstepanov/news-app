@@ -1,14 +1,12 @@
 import firebase from "firebase/app";
 import "firebase/database";
-import "firebase/auth";
 
 const state = {
   newsListFavorites: [],
 };
 const actions = {
-  addMyFavoritesNews({ commit }, payload) {
-    const uid = firebase.auth().currentUser.uid;
-
+  addMyFavoritesNews({ commit, getters }, payload) {
+    const uid = getters.getUidUser;
     try {
       const newKey = firebase.database().ref(`/users/${uid}`).push().key;
       commit("addMyNewsItem", { payload, newKey });
@@ -17,8 +15,8 @@ const actions = {
       console.log(err);
     }
   },
-  removeFavoriteNews({ commit }, payload) {
-    const uid = firebase.auth().currentUser.uid;
+  removeFavoriteNews({ commit, getters }, payload) {
+    const uid = getters.getUidUser;
     const { key } = state.newsListFavorites.find(
       (news) => news.title === payload.title
     );
@@ -29,8 +27,8 @@ const actions = {
       console.log(err);
     }
   },
-  async loadFavoriteNews({ commit }) {
-    const uid = firebase.auth().currentUser.uid;
+  async loadFavoriteNews({ commit, getters }) {
+    const uid = getters.getUidUser;
     try {
       firebase
         .database()

@@ -85,6 +85,7 @@ const mutations = {
 };
 const getters = {
   getUserProfile: (state) => state.userProfile,
+  getUidUser: (state) => state.userProfile.uid,
 };
 
 export default { state, actions, mutations, getters };
