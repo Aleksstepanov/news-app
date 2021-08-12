@@ -21,6 +21,7 @@ const actions = {
       commit("setLoading", false);
     } catch (err) {
       commit("setError", err);
+      throw new Error(err);
     }
   },
   addFavorite({ commit, dispatch }, payload) {
