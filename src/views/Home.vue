@@ -57,10 +57,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(["addFavorite"]),
+    ...mapActions(["addFavorite", "removeFavorite"]),
     favoriteClick(index) {
-      this.addFavorite(index);
-      this.favorieList.push(index);
+      if (this.favorieList.some((icon) => icon === index)) {
+        this.favorieList = this.favorieList.filter((icon) => icon != index);
+        this.removeFavorite(index);
+      } else {
+        this.favorieList.push(index);
+        this.addFavorite(index);
+      }
     },
   },
 
