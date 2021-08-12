@@ -11,20 +11,16 @@
           :key="article.source.id + article.source.name + Date.now()"
         >
           <b-card :title="article.title" :sub-title="article.author">
-            <b-row class="d-flex justify-content-end icon-star"
-              ><b-icon
-                v-if="!getNewsList[index].favorite"
+            <b-row class="d-flex justify-content-end icon-star">
+              <b-icon
                 @click="favoriteClick(index)"
-                icon="star"
+                :icon="'star-fill'"
+                :variant="
+                  favorieList.some((el) => el === index) ? 'warning' : ''
+                "
                 class="h1"
               ></b-icon>
-              <b-icon
-                v-else
-                icon="star-fill"
-                variant="warning"
-                class="h1"
-              ></b-icon
-            ></b-row>
+            </b-row>
             <b-row>
               <b-col
                 ><b-card-text>{{ article.description }}</b-card-text></b-col
@@ -49,6 +45,12 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Home",
 
+  data() {
+    return {
+      favorieList: [],
+    };
+  },
+
   components: {
     FormFetch,
     Spiner,
@@ -58,7 +60,7 @@ export default {
     ...mapActions(["addFavorite"]),
     favoriteClick(index) {
       this.addFavorite(index);
-      console.log(this.getNewsList);
+      this.favorieList.push(index);
     },
   },
 

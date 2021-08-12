@@ -39,14 +39,15 @@ const mutations = {
     state.newsList.map((art) => Object.assign(art, { favorite: val }));
   },
   setArticlesFavorite(state, val) {
+    state.newsList[val].favorite = true;
     state.newsListFavorites.push(state.newsList[val]);
-    state.newsList.splice(val, 1);
-    state.newsListFavorites[state.newsListFavorites.length - 1].favorite = true;
   },
 };
 const getters = {
-  getNewsList: (state) =>
-    state.newsList.concat(state.newsListFavorites).reverse(),
+  getNewsList: (state) => state.newsList,
+  getFavorites: (state) => {
+    return state.newsList.map((art) => art.favorite);
+  },
 };
 
 export default { state, actions, mutations, getters };
