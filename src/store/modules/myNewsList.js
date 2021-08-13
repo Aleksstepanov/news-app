@@ -24,8 +24,9 @@ const actions = {
     const idx = getters.getNewsList.findIndex(
       (news) => news.title === payload.title
     );
+    console.log(idx);
     if (idx >= 0) {
-      commit("removeArticlesFavorite", false);
+      commit("removeArticlesFavorite", idx);
     }
     try {
       firebase.database().ref(`users/${uid}/mynews/${key}`).remove();

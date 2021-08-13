@@ -70,11 +70,14 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getNewsList", "getLoading"]),
+    ...mapGetters(["getNewsList", "getLoading", "getNewsList"]),
   },
 
   mounted() {
-    console.log(this.favorieList);
+    this.favorieList = [];
+    this.getNewsList
+      .map((news) => news.favorite)
+      .forEach((el, idx) => (el ? this.favorieList.push(idx) : null));
   },
 };
 </script>
