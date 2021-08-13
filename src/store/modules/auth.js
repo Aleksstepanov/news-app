@@ -25,7 +25,8 @@ const actions = {
     }
   },
 
-  exit() {
+  exit({ dispatch }) {
+    dispatch("fetchUser", "");
     firebase.auth().signOut();
   },
 
