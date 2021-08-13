@@ -72,6 +72,10 @@ export default {
   computed: {
     ...mapGetters(["getNewsList", "getLoading"]),
   },
+
+  mounted() {
+    console.log(this.favorieList);
+  },
 };
 </script>
 

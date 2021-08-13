@@ -21,6 +21,12 @@ const actions = {
       (news) => news.title === payload.title
     );
     commit("removeMyNewsItem", payload);
+    const idx = getters.getNewsList.findIndex(
+      (news) => news.title === payload.title
+    );
+    if (idx >= 0) {
+      commit("removeArticlesFavorite", false);
+    }
     try {
       firebase.database().ref(`users/${uid}/mynews/${key}`).remove();
     } catch (err) {
@@ -30,25 +36,23 @@ const actions = {
   async loadFavoriteNews({ commit, getters }) {
     const uid = getters.getUidUser;
     try {
+      commit("setLoading", true);
       firebase
         .database()
-        .ref(`users/${uid}`)
+        .ref(`users/${uid}/mynews/`)
         .on("value", async (snapshot) => {
-          commit("setLoading", true);
           const data = await snapshot.val();
           commit("setNewsListFavorites", data);
-        })
-        .then(() => {
           commit("setLoading", false);
-          commit("setError", null);
-          commit("SetInformation", {
+          commit("setInformation", {
             code: "success",
-            message: "firebase loading data",
+            message: "firbase dataloading",
           });
+          commit("setError", null);
         });
-    } catch (err) {
-      commit("setError", err);
-      throw new Error(err);
+    } catch (error) {
+      commit("setError", error);
+      throw new Error(error);
     }
   },
 };
@@ -63,7 +67,17 @@ const mutations = {
       (news) => news.title != val.title
     );
   },
+  setNewsListFavorites(state, val) {
+    if (val) {
+      const newList = Object.values(val);
+      state.newsListFavorites = newList;
+    } else {
+      state.newsListFavorites = [];
+    }
+  },
 };
-const getters = {};
+const getters = {
+  getMyNewsListFavoriotes: (state) => state.newsListFavorites,
+};
 
 export default { state, actions, mutations, getters };
