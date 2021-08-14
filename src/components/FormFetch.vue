@@ -1,5 +1,30 @@
 <template>
-  <b-row class="mr-0 ml-0 mt-2 mb-2">
+  <b-row
+    class="
+      mr-0
+      ml-0
+      mt-2
+      mb-2
+      d-flex
+      flex-row-reverse
+      justify-content-between
+      w-100
+    "
+  >
+    <b-icon
+      v-if="show.form"
+      @click="CaretUpClickHandler()"
+      :icon="'caret-up-fill'"
+      class="h1"
+      :style="'cursor: pointer'"
+    ></b-icon>
+    <b-icon
+      v-else
+      @click="CaretDownClickHandler()"
+      :icon="'caret-down-fill'"
+      class="h1"
+      :style="'cursor: pointer'"
+    ></b-icon>
     <b-form @submit.prevent="submitClickHandler()">
       <b-row class="mr-0 ml-0">
         <b-form-group
@@ -23,6 +48,7 @@
           id="label-from"
           label="Date of first article:"
           label-for="from"
+          v-if="show.from"
         >
           <b-form-datepicker id="from" v-model="form.from"></b-form-datepicker>
         </b-form-group>
@@ -32,6 +58,7 @@
           class="w-50"
           label="Date of last article:"
           label-for="to"
+          v-if="show.to"
         >
           <b-form-datepicker id="to" v-model="form.to"></b-form-datepicker>
         </b-form-group>
@@ -39,6 +66,7 @@
 
       <b-row class="mr-0 ml-0">
         <b-form-group
+          v-if="show.language"
           id="label-language"
           class="w-25 mr-2"
           label="Language:"
@@ -52,6 +80,7 @@
         </b-form-group>
 
         <b-form-group
+          v-if="show.sortBy"
           class="w-25"
           id="label-sort"
           label="Sort by:"
@@ -70,7 +99,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "FormFetch",
@@ -78,7 +107,6 @@ export default {
   data() {
     return {
       form: {
-        title: "",
         search: "",
         from: new Date(),
         to: new Date(),
@@ -102,7 +130,24 @@ export default {
         "zh",
       ],
       sortOptions: ["relevancy", "popularity", "publishedAt"],
+      show: {
+        form: true,
+        from: true,
+        to: true,
+        language: true,
+        sortBy: true,
+      },
     };
+  },
+
+  mounted() {
+    if (this.getNewsList.length > 0) {
+      this.CaretUpClickHandler();
+    }
+  },
+
+  computed: {
+    ...mapGetters(["getNewsList"]),
   },
 
   methods: {
@@ -117,6 +162,15 @@ export default {
         sortBy: this.form.sortBy,
       };
       this.fetchNewsList(url);
+    },
+    editingShowForm(val) {
+      Object.keys(this.show).forEach((key) => (this.show[key] = val));
+    },
+    CaretUpClickHandler() {
+      this.editingShowForm(false);
+    },
+    CaretDownClickHandler() {
+      this.editingShowForm(true);
     },
   },
 };

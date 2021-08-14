@@ -1,7 +1,7 @@
 <template>
   <BContainer>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <b-navbar-brand href="#"><Logo /></b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -34,6 +34,7 @@
 
 <script>
 import Toasts from "@/components/Toasts.vue";
+import Logo from "@/components/Logo.vue";
 import { BContainer } from "bootstrap-vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -41,6 +42,7 @@ export default {
   components: {
     BContainer,
     Toasts,
+    Logo,
   },
 
   computed: {

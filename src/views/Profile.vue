@@ -1,5 +1,5 @@
 <template>
-  <b-card title="User Profile:">
+  <b-card title="User Profile:" class="b-card-profile">
     <b-card-text>
       <b-list-group>
         <b-list-group-item
@@ -24,4 +24,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.b-card-profile {
+  height: 100vh;
+}
+</style>
